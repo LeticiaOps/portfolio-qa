@@ -1,0 +1,345 @@
+{
+  "info": {
+    "_postman_id": "aab3a888-5375-41e2-be32-5b53f2b5bb42",
+    "name": "QA Portfolio",
+    "description": "## **Portfólio de testes de API feito durante meus estudos de QA.**\n\n##### Sites de treino usados:\n\n- JSONPlaceholder: GET, POST, PUT, DELETE e teste negativo (404)\n    \n- Restful-booker: autenticação com token, criação e edição de reserva\n    \n\nOs requests têm testes automáticos na aba After response (status, campos e tempo).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55773152",
+    "_collection_link": "https://go.postman.co/collection/55773152-aab3a888-5375-41e2-be32-5b53f2b5bb42?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "JSONPlaceholder",
+      "item": [
+        {
+          "name": "Buscar Post 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status é 200\", () => pm.response.to.have.status(200));\r\n\r\npm.test(\"Tem o campo title\", () => {\r\n  pm.expect(pm.response.json()).to.have.property(\"title\");\r\n});\r\n\r\npm.test(\"Responde em menos de 800ms\", () => {\r\n  pm.expect(pm.response.responseTime).to.be.below(800);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Posts do Usuário 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts?userId=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status é 201\", () => pm.response.to.have.status(201));\r\n\r\npm.test(\"Devolveu o título enviado\", () => {\r\n  pm.expect(pm.response.json().title).to.eql(\"Meu segundo Post\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Meu segundo Post\",\r\n    \"body\": \"Testando a criação de um post pelo Postman\",\r\n    \"userId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Post",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Meu primeiro Post\",\r\n    \"body\": \"Testando a atualização em um post pelo Postman\",\r\n    \"userId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Apagar Post",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post Inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status é 404\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/99999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "99999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Requests básicos de CRUD em [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com). Site de treino: não salva os dados de verdade."
+    },
+    {
+      "name": "Restful-booker",
+      "item": [
+        {
+          "name": "POST - Autenticar (token)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://restful-booker.herokuapp.com/auth",
+              "protocol": "https",
+              "host": [
+                "restful-booker",
+                "herokuapp",
+                "com"
+              ],
+              "path": [
+                "auth"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Criar reserva",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstname\": \"Leticia\",\r\n  \"lastname\": \"Teste\",\r\n  \"totalprice\": 150,\r\n  \"depositpaid\": true,\r\n  \"bookingdates\": {\r\n    \"checkin\": \"2026-12-01\",\r\n    \"checkout\": \"2026-12-05\"\r\n  },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://restful-booker.herokuapp.com/booking",
+              "protocol": "https",
+              "host": [
+                "restful-booker",
+                "herokuapp",
+                "com"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Atualizar reserva (com token)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token=e4e452381a52eb3"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstname\": \"Leticia\",\r\n  \"lastname\": \"Teste\",\r\n  \"totalprice\": 200,\r\n  \"depositpaid\": true,\r\n  \"bookingdates\": {\r\n    \"checkin\": \"2026-12-01\",\r\n    \"checkout\": \"2026-12-05\"\r\n  },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://restful-booker.herokuapp.com/booking/814",
+              "protocol": "https",
+              "host": [
+                "restful-booker",
+                "herokuapp",
+                "com"
+              ],
+              "path": [
+                "booking",
+                "814"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Sem token (403)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstname\": \"Leticia\",\r\n  \"lastname\": \"Teste\",\r\n  \"totalprice\": 200,\r\n  \"depositpaid\": true,\r\n  \"bookingdates\": {\r\n    \"checkin\": \"2026-12-01\",\r\n    \"checkout\": \"2026-12-05\"\r\n  },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://restful-booker.herokuapp.com/booking/814",
+              "protocol": "https",
+              "host": [
+                "restful-booker",
+                "herokuapp",
+                "com"
+              ],
+              "path": [
+                "booking",
+                "814"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Fluxo com autenticação em [https://restful-booker.herokuapp.com](https://restful-booker.herokuapp.com): pegar token, criar reserva e editar. Sem o token, o PUT retorna 403."
+    }
+  ]
+}
