@@ -2,6 +2,8 @@
 
 Projetos práticos de testes que estou construindo enquanto aprendo automação.
 
+> Hands-on QA portfolio built while moving from banking support to QA/Ops and test automation. Docs are mostly in Portuguese; code, tools and technical terms are in English.
+
 ## O que tem aqui
 
 | Pasta | Conteúdo | Status |
