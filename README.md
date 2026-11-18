@@ -7,7 +7,7 @@ Projetos práticos de testes que estou construindo enquanto aprendo automação.
 | Pasta | Conteúdo | Status |
 |---|---|---|
 | [api/](api/) | Testes de API com Postman (collection exportada, testes automáticos e evidência do Runner) | Concluído |
-| [docs/](docs/) | Casos de teste e bug report | Em andamento |
+| [docs/](docs/) | Casos de teste, bug report e acompanhamento no Jira | Concluído |
 | [playwright/](playwright/) | Testes web com Playwright + Python | Em andamento |
 | [selenium/](selenium/) | Os mesmos testes com Selenium + Python | Em andamento |
 | [robot/](robot/) | Os mesmos testes com Robot Framework | Em andamento |
